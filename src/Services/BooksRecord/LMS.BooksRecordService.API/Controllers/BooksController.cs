@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using LMS.Application.Common.Extensions;
 using LMS.BooksRecordService.API.Application.Commands;
 using LMS.BooksRecordService.API.Application.DTOs;
 using LMS.BooksRecordService.API.Application.Queries;
@@ -28,7 +29,7 @@ namespace LMS.BooksRecordService.API.Controllers
             return Ok(response);
         }
 
-        [HttpPost("update")]
+        [HttpPut("{bookId}update")]
         public async Task<IActionResult> UpdateBookAsync(int bookId, UpsertBookCommand command)
         {
             command.SetId(bookId);
@@ -37,9 +38,9 @@ namespace LMS.BooksRecordService.API.Controllers
         }
 
         [HttpGet("all")]
-        public async Task<List<BookDTO>> GetBooksAsync(GetAllBookQuery query)//paged list m convrt krna
+        public async Task<PagedList<BookDTO>> GetBooksAsync(string? search, int page, int pageSize)
         {
-            var books = await _mediator.Send(query);
+            var books = await _mediator.Send(new GetBooksQuery(search,page ,pageSize));
             return books;
         }
         [HttpGet("one")]

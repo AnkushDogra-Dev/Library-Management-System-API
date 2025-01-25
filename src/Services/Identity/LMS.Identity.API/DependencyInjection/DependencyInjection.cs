@@ -1,3 +1,4 @@
+using System.Reflection;
 using LMS.Identity.API.Entities;
 using LMS.Identity.API.Persistance;
 using Microsoft.EntityFrameworkCore;
@@ -12,7 +13,7 @@ namespace LMS.Identity.API.DependencyInjection {
 				?? throw new InvalidOperationException("Connection string 'LMSDbConnectionString' not found.")));
 
 			services.AddScoped<IdentityDbContext>();
-
+            services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 			services.AddEndpointsApiExplorer();
 
 			services.AddControllers();

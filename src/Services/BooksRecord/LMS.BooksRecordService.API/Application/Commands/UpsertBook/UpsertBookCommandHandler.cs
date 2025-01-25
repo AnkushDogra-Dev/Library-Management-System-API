@@ -1,5 +1,4 @@
 using LMS.Application.Common.Exceptions;
-using LMS.BooksRecordService.API.Application.DTOs;
 using LMS.BooksRecordService.API.Entities;
 using LMS.BooksRecordService.API.Persistance;
 using MediatR;
@@ -24,21 +23,23 @@ namespace LMS.BooksRecordService.API.Application.Commands
                 book = await _dbContext.Books.FirstOrDefaultAsync(b => b.Id == request.BookId, cancellationToken)
                 ?? throw new NotFoundException(nameof(Book), request.BookId);
 
-
-                book.UpdateBookDetails(request.Title, request.Author, request.ISBN, request.Publisher, request.PublicationDate, request.AvailableCopies,
-                                        request.NumberOfCopies, request.ShelfLocation, request.Status
-                );
-
-                await _dbContext.SaveChangesAsync(cancellationToken);
+                book.UpdateBookDetails(request.Title, request.Author ,request.Publisher, request.PublicationDate);
             }
             else
             {
-                book = new Book(request.Title, request.Author, request.ISBN, request.Publisher, request.PublicationDate, request.AvailableCopies, request.NumberOfCopies, request.ShelfLocation, request.Status);
+                book = await _dbContext.Books.FirstOrDefaultAsync(b => b.Title == request.Title && b.Author == request.Author, cancellationToken);
 
+                if(book is not null) {
+                    book.AddBook();
+                } 
+                else {
+                book = new Book(request.Title, request.Author, request.Publisher, DateTime.UtcNow);
                 _dbContext.Books.Add(book);
-                await _dbContext.SaveChangesAsync(cancellationToken);
+
+                }
             }
 
+            await _dbContext.SaveChangesAsync(cancellationToken);
             return book.Id;
         }
     }

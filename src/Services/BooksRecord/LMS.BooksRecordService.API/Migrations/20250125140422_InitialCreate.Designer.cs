@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LMS.BooksRecordService.API.Migrations
 {
     [DbContext(typeof(BooksDbContext))]
-    [Migration("20250125101615_InitialCreate")]
+    [Migration("20250125140422_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -41,25 +41,10 @@ namespace LMS.BooksRecordService.API.Migrations
                     b.Property<int>("AvailableCopies")
                         .HasColumnType("int");
 
-                    b.Property<string>("ISBN")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("NumberOfCopies")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("PublicationDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Publisher")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ShelfLocation")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Status")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

@@ -1,3 +1,4 @@
+using System.Reflection;
 using LMS.BorrowersRecord.API.Entities;
 using LMS.BorrowersRecord.API.Persistance;
 using Microsoft.AspNetCore.Identity;
@@ -13,6 +14,7 @@ namespace LMS.BorrowersRecord.API.DependencyInjection {
 				?? throw new InvalidOperationException("Connection string 'LMSDbConnectionString' not found.")));
 
 			services.AddScoped<BorrowerDbContext>();
+            services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 
 			services.AddEndpointsApiExplorer();
 

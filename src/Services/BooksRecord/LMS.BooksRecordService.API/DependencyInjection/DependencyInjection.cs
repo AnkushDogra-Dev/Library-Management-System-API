@@ -1,4 +1,7 @@
+using System.Reflection;
+using LMS.BooksRecordService.API.Mappings;
 using LMS.BooksRecordService.API.Persistance;
+using LMS.BooksRecordService.API.Repository;
 using Microsoft.EntityFrameworkCore;
 
 namespace LMS.BooksRecordService.API.DependencyInjection
@@ -13,13 +16,15 @@ namespace LMS.BooksRecordService.API.DependencyInjection
 				?? throw new InvalidOperationException("Connection string 'LMSDbConnectionString' not found.")));
 
 			services.AddScoped<BooksDbContext>();
+            services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+
+			services.AddAutoMapper(typeof(MappingProfile));
+            services.AddAutoMapper(Assembly.GetExecutingAssembly(), typeof(MappingProfile).Assembly);
+
+            services.AddScoped<IBooksRepository, BooksRepository>();
+
 
 			services.AddEndpointsApiExplorer();
-			// services.AddSwaggerGen(c => c.SwaggerDoc("v1", new OpenApiInfo
-			// {
-			// 	Title = "Books Management System",
-			// 	Version = "v1"
-			// }));
 			services.AddControllers();
 			services.AddControllers().AddApplicationPart(typeof(LMS.BooksRecordService.API.Controllers.BooksController).Assembly);
 
