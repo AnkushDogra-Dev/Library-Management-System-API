@@ -19,7 +19,7 @@ namespace LMS.BooksRecordService.API.DependencyInjection
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 
 			services.AddAutoMapper(typeof(MappingProfile));
-            services.AddAutoMapper(Assembly.GetExecutingAssembly(), typeof(MappingProfile).Assembly);
+            services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
             services.AddScoped<IBooksRepository, BooksRepository>();
 

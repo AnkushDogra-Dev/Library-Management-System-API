@@ -7,19 +7,23 @@ using Microsoft.EntityFrameworkCore;
 namespace LMS.BooksRecordService.API.Repository
 
 {
-	public class BooksRepository : IBooksRepository
-	{
-		private readonly BooksDbContext _context;
+    public class BooksRepository : IBooksRepository
+    {
+        private readonly BooksDbContext _context;
 
         public BooksRepository(BooksDbContext context)
         {
             _context = context;
         }
 
-        public async Task<PagedList<Book>> GetBooksAsync(string? search, int page , int pageSize,CancellationToken cancellationToken)
+        public async Task<PagedList<Book>> GetBooksAsync(string? search, int page, int pageSize, CancellationToken cancellationToken)
         {
-            var query =  _context.Books.AsQueryable();
-            return await query.OrderBy(x=> x.Id).ToPagedListAsync(page, pageSize);
+            var query = _context.Books.AsQueryable();
+            if (search is not null)
+            {
+                query = query.Where(x=> x.Title.Contains(search));
+            }
+            return await query.OrderBy(x => x.Id).ToPagedListAsync(page, pageSize);
         }
     }
 }
