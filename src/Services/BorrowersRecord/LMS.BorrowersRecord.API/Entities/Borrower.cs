@@ -20,5 +20,12 @@ namespace LMS.BorrowersRecord.API.Entities
         {
             BorrowerBooks?.Add(borrowerBooks);
         }
+
+        public void UpdateBorrowerDetails(string fullName, string emailAddress, string phoneNumber)
+        {
+            FullName = fullName;
+            EmailAddress = emailAddress;
+            PhoneNumber = phoneNumber;
+        }
     }
 }

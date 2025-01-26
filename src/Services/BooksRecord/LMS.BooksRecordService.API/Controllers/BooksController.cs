@@ -29,7 +29,7 @@ namespace LMS.BooksRecordService.API.Controllers
             return Ok(response);
         }
 
-        [HttpPut("{bookId}update")]
+        [HttpPut("{bookId}")]
         public async Task<IActionResult> UpdateBookAsync(int bookId, UpsertBookCommand command)
         {
             command.SetId(bookId);
@@ -37,37 +37,25 @@ namespace LMS.BooksRecordService.API.Controllers
             return Ok(response);
         }
 
-        [HttpGet("all")]
+        [HttpGet]
         public async Task<PagedList<BookDTO>> GetBooksAsync(string? search, int page, int pageSize)
         {
             var books = await _mediator.Send(new GetBooksQuery(search,page ,pageSize));
             return books;
         }
-        [HttpGet("one")]
-
-        public async Task<IActionResult> GetBooks(string bookId)
+        [HttpGet("{bookId}")]
+        public async Task<IActionResult> GetBook(int bookId)
         {
-            if (string.IsNullOrEmpty(bookId))
-            {
-                return BadRequest("BookId is required.");
-            }
 
             var query = new GetBookByIdQuery { BookId = bookId };
             var book = await _mediator.Send(query);
-
-            if (book == null)
-            {
-                return NotFound();
-            }
-
             return Ok(book);
         }
 
-        [HttpDelete]
-        public async Task<string> DeleteBookByIdAsync(int bookId)
+        [HttpDelete("{bookId}")]
+        public async Task DeleteBookByIdAsync(int bookId)
         {
-            var command = new DeleteBookCommand { BookId = bookId };
-            return await _mediator.Send(command);
+             await _mediator.Send(new DeleteBookCommand(bookId));
         }
     }
 }

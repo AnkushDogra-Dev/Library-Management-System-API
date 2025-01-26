@@ -1,6 +1,7 @@
 using System.Reflection;
 using LMS.BorrowersRecord.API.Entities;
 using LMS.BorrowersRecord.API.Persistance;
+using LMS.BorrowersRecord.API.Repository;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
@@ -20,7 +21,7 @@ namespace LMS.BorrowersRecord.API.DependencyInjection {
 
 			//services.AddSingleton<IHostedService, DbInitializerService>();
 			services.AddControllers().AddApplicationPart(typeof(LMS.BorrowersRecord.API.Controllers.BorrowersController).Assembly);
-
+			services.AddScoped<IBorrowerRepository,BorrowerRepository>();
 			return services;
 		}
 

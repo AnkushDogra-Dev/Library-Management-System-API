@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace LMS.BooksRecordService.API.Application.Commands
 {
-    public record UpsertBookCommand : IRequest<int>
+    public record UpsertBookCommand : IRequest<int?>
     {
         [JsonIgnore]
         public int BookId { get; set; }

@@ -8,6 +8,9 @@ namespace LMS.BooksRecordService.API.Repository
 	{
 		Task<PagedList<Book>> GetBooksAsync(string? search, int page, int pageSize, CancellationToken cancellationToken);
 
+		Task UpdateBookAsync(int bookId, string title, string author, string publisher, DateTime publicationDate, CancellationToken cancellationToken);
+		Task<int> AddBookAsync(string title, string author, string publisher, DateTime publicationDate, CancellationToken cancellationToken);
+		Task DeleteAsync(int bookId, CancellationToken cancellationToken);
 		// Task<List<Product>> GetAllAsync(CancellationToken cancellationToken);
 
 		// Task DeleteAsync(Guid id);

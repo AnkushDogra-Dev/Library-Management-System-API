@@ -13,6 +13,6 @@ namespace LMS.BooksRecordService.API.Application.DTOs
         public string Author { get; init; } = "";
         public string Publisher { get; init; } = "";
         public DateTime PublicationDate { get; init; }
-         public int AvailableCopies { get; init; }
+        public int AvailableCopies { get; init; }
     }
 }
