@@ -1,8 +1,11 @@
 using System.Reflection;
+using System.Text;
 using LMS.Identity.API.Entities;
 using LMS.Identity.API.Persistance;
 using LMS.Identity.API.Repository;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 namespace LMS.Identity.API.DependencyInjection
 {
@@ -11,6 +14,8 @@ namespace LMS.Identity.API.DependencyInjection
 		//Extension method to register services in DI Container.
 		public static IServiceCollection AddIdentityService(this IServiceCollection services, IConfiguration configuration)
 		{
+			services.AddSingleton<IConfiguration>(configuration);
+
 			services.AddDbContext<IdentityDbContext>(options =>
 				options.UseSqlServer(configuration.GetConnectionString("LMSDbConnectionString")
 				?? throw new InvalidOperationException("Connection string 'LMSDbConnectionString' not found.")));
@@ -19,10 +24,34 @@ namespace LMS.Identity.API.DependencyInjection
 			services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 			services.AddEndpointsApiExplorer();
 
+
 			services.AddControllers();
 			services.AddControllers().AddApplicationPart(typeof(LMS.Identity.API.Controllers.IdentityController).Assembly);
 
 			services.AddScoped<IIdentityRepository, IdentityRepository>();
+
+			services.AddAuthorizationBuilder()
+			.AddPolicy(nameof(Role.Librarian), policy => policy.RequireRole(nameof(Role.Admin), nameof(Role.Librarian)))
+			.AddPolicy(nameof(Role.Admin), policy => policy.RequireRole(nameof(Role.Admin)));
+
+			services.AddAuthentication(options =>
+						{
+							options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+							options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+						})
+						.AddJwtBearer(options =>
+						{
+							options.TokenValidationParameters = new TokenValidationParameters
+							{
+								ValidateIssuer = true,
+								ValidateAudience = true,
+								ValidateLifetime = true,
+								ValidateIssuerSigningKey = true,
+								ValidIssuer = configuration["Jwt:Issuer"],
+								ValidAudience = configuration["Jwt:Audience"],
+								IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"] ?? "ZGV2ZWxvcG1lbnRlc3QxMjM0NTY3ODkwYWJjZGVmZw=="))
+							};
+						});
 
 
 			return services;

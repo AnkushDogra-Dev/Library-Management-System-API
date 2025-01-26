@@ -10,6 +10,8 @@ namespace LMS.BorrowersRecord.API.DependencyInjection {
 	public static class DependencyInjection {
 		public static IServiceCollection AddBorrowersService(this IServiceCollection services, IConfiguration configuration)
 		{
+			services.AddSingleton<IConfiguration>(configuration);
+
 			services.AddDbContext<BorrowerDbContext>(options =>
 				options.UseSqlServer(configuration.GetConnectionString("LMSDbConnectionString")
 				?? throw new InvalidOperationException("Connection string 'LMSDbConnectionString' not found.")));

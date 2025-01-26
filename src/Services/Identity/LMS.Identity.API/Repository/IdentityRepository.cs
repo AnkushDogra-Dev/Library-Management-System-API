@@ -33,7 +33,8 @@ namespace LMS.Identity.API.Repository
                     new Claim(ClaimTypes.Role,  user.Role.ToString()),
                 };
 
-                var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]!));
+                var authSigningKey = new SymmetricSecurityKey(
+                    Encoding.UTF8.GetBytes(_configuration["Jwt:Key"] ?? "ZGV2ZWxvcG1lbnRlc3QxMjM0NTY3ODkwYWJjZGVmZw=="));
 
                 var token = new JwtSecurityToken(
                 issuer: _configuration["Jwt:Issuer"],

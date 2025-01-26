@@ -1,15 +1,10 @@
-using System.Text;
-using LMS.Identity.API.Entities;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using src.Services.Mono.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
-// Add Services
-builder.Services.AddMonoApi(builder.Configuration);
 var apiServiceSettings = builder.Configuration.GetSection("ApiServiceSettings").Get<ApiServiceSettings>();
-builder.Services.AddApiService(apiServiceSettings!);
+
+
 
 builder.Services.AddSwaggerGen(c =>
 {
@@ -40,32 +35,10 @@ builder.Services.AddSwaggerGen(c =>
 	});
 });
 
-builder.Services.AddAuthorization(options =>
-{
-	options.AddPolicy(nameof(Role.Librarian), policy => policy.RequireRole(nameof(Role.Admin), nameof(Role.Librarian)));
-	options.AddPolicy(nameof(Role.Admin), policy => policy.RequireRole(nameof(Role.Admin)));
-});
-
-builder.Services.AddAuthentication(options =>
-{
-	options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-	options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-})
-.AddJwtBearer(options =>
-{
-	options.TokenValidationParameters = new TokenValidationParameters
-	{
-		ValidateIssuer = true,
-		ValidateAudience = true,
-		ValidateLifetime = true,
-		ValidateIssuerSigningKey = true,
-		ValidIssuer = builder.Configuration["Jwt:Issuer"],
-		ValidAudience = builder.Configuration["Jwt:Audience"],
-		IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!))
-	};
-});
-
 builder.Services.AddEndpointsApiExplorer();
+
+builder.Services.AddMonoApi(builder.Configuration);
+builder.Services.AddApiService(apiServiceSettings!);
 
 var app = builder.Build();
 
@@ -81,11 +54,12 @@ app.UseSwaggerUI(c =>
 	c.SwaggerEndpoint("/swagger/v1/swagger.json", "V1 Docs");
 });
 
-// User Services
-await app.UseMonoService();
+
 app.UseHttpsRedirection();
 app.UseRouting();
-
+app.UseAuthentication(); 
+app.UseAuthorization();  
 app.MapControllers();
+await app.UseMonoService();
 
 await app.RunAsync();

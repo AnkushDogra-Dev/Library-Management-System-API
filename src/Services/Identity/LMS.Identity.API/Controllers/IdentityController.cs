@@ -24,8 +24,7 @@ namespace LMS.Identity.API.Controllers
         /// <param name="id">user id</param>
         /// <param name="command">user Details.</param>
         [HttpPut("login")]
-        [Authorize]
-        public async Task<IActionResult> LoginUser(UpsertUserCommand command)
+        public async Task<IActionResult> LoginUser(LoginUserCommand command)
         {
             var response = await _mediator.Send(command);
             return Ok(response);

@@ -7,6 +7,7 @@ using LMS.BooksRecordService.API.Application.Commands;
 using LMS.BooksRecordService.API.Application.DTOs;
 using LMS.BooksRecordService.API.Application.Queries;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LMS.BooksRecordService.API.Controllers

@@ -17,7 +17,7 @@ namespace LMS.BorrowersRecord.API.Controllers
         {
             _mediator = mediator;
         }
-        
+
         [HttpPost("add")]
         public async Task<IActionResult> AddBorrowerAsync(UpsertBorrowerRecordCommand command)
         {
@@ -36,7 +36,7 @@ namespace LMS.BorrowersRecord.API.Controllers
         [HttpGet]
         public async Task<PagedList<BorrowersRecordDTO>> GetBorrowersAsync(string? search, int page, int pageSize)
         {
-            var books = await _mediator.Send(new GetBorrowersRecordQuery(search,page ,pageSize));
+            var books = await _mediator.Send(new GetBorrowersRecordQuery(search, page, pageSize));
             return books;
         }
 
@@ -52,7 +52,21 @@ namespace LMS.BorrowersRecord.API.Controllers
         [HttpDelete("{borrowerId}")]
         public async Task DeleteBorrowerByIdAsync(int borrowerId)
         {
-             await _mediator.Send(new DeleteBorrowerRecordCommand(borrowerId));
+            await _mediator.Send(new DeleteBorrowerRecordCommand(borrowerId));
         }
+
+        [HttpPut("{borrowerId}/Issue")]
+        public async Task IssuedBookAsync(int borrowerId, int bookId)
+        {
+            await _mediator.Send(new IssueReturnBookCommand(borrowerId, bookId));
+            // return Ok(response);
+        }
+        
+        [HttpPut("{borrowerId}/Return")]
+        public async Task ReturnBookAsync(int borrowerId, int bookId)
+        {
+            await _mediator.Send(new IssueReturnBookCommand(borrowerId, bookId));
+        }
+
     }
 }
