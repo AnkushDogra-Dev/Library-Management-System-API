@@ -4,6 +4,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>77998a8a-3c0e-433f-82b2-6050836956c9</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -18,11 +19,11 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.12" />
   </ItemGroup>
+
   <ItemGroup>
     <ProjectReference Include="../../Identity/LMS.Identity.API/LMS.Identity.API.csproj" />
     <ProjectReference Include="../../BorrowersRecord/LMS.BorrowersRecord.API/LMS.BorrowersRecord.API.csproj" />
     <ProjectReference Include="../../BooksRecord/LMS.BooksRecordService.API/LMS.BooksRecordService.API.csproj" />
-
   </ItemGroup>
 
 </Project>

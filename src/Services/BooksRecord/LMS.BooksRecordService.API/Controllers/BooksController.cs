@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using LMS.Application.Common.Extensions;
 using LMS.BooksRecordService.API.Application.Commands;
 using LMS.BooksRecordService.API.Application.DTOs;
@@ -12,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace LMS.BooksRecordService.API.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [Route("api/books")]
     [ApiController]
     public class BooksController : ControllerBase

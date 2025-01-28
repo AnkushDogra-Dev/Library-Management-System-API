@@ -49,7 +49,7 @@ namespace LMS.Identity.API.DependencyInjection
 								ValidateIssuerSigningKey = true,
 								ValidIssuer = configuration["Jwt:Issuer"],
 								ValidAudience = configuration["Jwt:Audience"],
-								IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"] ?? "ZGV2ZWxvcG1lbnRlc3QxMjM0NTY3ODkwYWJjZGVmZw=="))
+								IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]!))
 							};
 						});
 

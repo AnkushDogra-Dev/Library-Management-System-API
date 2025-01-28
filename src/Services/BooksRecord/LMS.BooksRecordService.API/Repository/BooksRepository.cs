@@ -48,7 +48,7 @@ namespace LMS.BooksRecordService.API.Repository
         public async Task<PagedList<Book>> GetBooksAsync(string? search, int page, int pageSize, CancellationToken cancellationToken)
         {
             var query = _context.Books.AsQueryable();
-            if (search is not null)
+            if (search!=null)
             {
                 query = query.Where(x => x.Title.Contains(search));
             }

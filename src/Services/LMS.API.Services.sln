@@ -25,6 +25,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LMS.BorrowersRecord.API", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LMS.Application.Common", "..\Common\LMS.Application.Common\LMS.Application.Common.csproj", "{6F07C44B-E3E5-489B-B3EC-9823EF8D99EF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookClient", "..\Clients\BookClient\BookClient.csproj", "{5D4B6316-0244-4762-B485-58C445F4CFA4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -58,6 +60,10 @@ Global
 		{6F07C44B-E3E5-489B-B3EC-9823EF8D99EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6F07C44B-E3E5-489B-B3EC-9823EF8D99EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6F07C44B-E3E5-489B-B3EC-9823EF8D99EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D4B6316-0244-4762-B485-58C445F4CFA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D4B6316-0244-4762-B485-58C445F4CFA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D4B6316-0244-4762-B485-58C445F4CFA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D4B6316-0244-4762-B485-58C445F4CFA4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{CE574386-83E9-4F79-94F1-F384C8888FF4} = {00E45BF5-BF6F-46B9-AA44-FE0A70AFF302}

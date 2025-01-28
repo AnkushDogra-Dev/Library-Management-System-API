@@ -11,7 +11,6 @@ namespace LMS.BooksRecordService.API.Mappings
         {
             CreateMap<Book, BookDTO>();
             CreateMap<PagedList<Book>, PagedList<BookDTO>>();
-
         }
     }
 }

@@ -34,7 +34,7 @@ namespace LMS.Identity.API.Repository
                 };
 
                 var authSigningKey = new SymmetricSecurityKey(
-                    Encoding.UTF8.GetBytes(_configuration["Jwt:Key"] ?? "ZGV2ZWxvcG1lbnRlc3QxMjM0NTY3ODkwYWJjZGVmZw=="));
+                    Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]!));
 
                 var token = new JwtSecurityToken(
                 issuer: _configuration["Jwt:Issuer"],
