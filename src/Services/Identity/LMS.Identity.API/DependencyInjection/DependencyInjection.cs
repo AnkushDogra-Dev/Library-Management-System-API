@@ -24,7 +24,6 @@ namespace LMS.Identity.API.DependencyInjection
 			services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 			services.AddEndpointsApiExplorer();
 
-
 			services.AddControllers();
 			services.AddControllers().AddApplicationPart(typeof(LMS.Identity.API.Controllers.IdentityController).Assembly);
 
@@ -52,7 +51,6 @@ namespace LMS.Identity.API.DependencyInjection
 								IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]!))
 							};
 						});
-
 
 			return services;
 		}
